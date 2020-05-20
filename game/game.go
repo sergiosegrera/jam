@@ -6,8 +6,10 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten"
+	ebitenaudio "github.com/hajimehoshi/ebiten/audio"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
+	"github.com/sergiosegrera/jam/audio"
 	"github.com/sergiosegrera/jam/player"
 )
 
@@ -22,7 +24,9 @@ type GameObject interface {
 }
 
 type Game struct {
-	player GameObject
+	player          GameObject
+	keySound        *audio.Sound
+	backgroundMusic *audio.Music
 }
 
 func New() (*Game, error) {
@@ -30,8 +34,27 @@ func New() (*Game, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	audioContext, err := ebitenaudio.NewContext(44100)
+	if err != nil {
+		return nil, err
+	}
+
+	keySound, err := audio.NewSound(audioContext, "./assets/sounds/keypress.wav")
+	if err != nil {
+		return nil, err
+	}
+
+	backgroundMusic, err := audio.NewMusic(audioContext, "./assets/music/ouverture1812.mp3")
+	if err != nil {
+		return nil, err
+	}
+	backgroundMusic.Play()
+
 	return &Game{
-		player: p,
+		player:          p,
+		keySound:        keySound,
+		backgroundMusic: backgroundMusic,
 	}, err
 }
 
@@ -40,6 +63,11 @@ func (g *Game) Update(image *ebiten.Image) error {
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		return errors.New("Escape called, game exited")
 	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyE) && !g.keySound.IsPlaying() {
+		g.keySound.Play()
+	}
+
 	g.player.Update()
 	return nil
 }

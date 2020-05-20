@@ -12,7 +12,7 @@ func main() {
 	ebiten.SetWindowSize(512, 512)
 	ebiten.SetWindowTitle("sergiosegrera/jam")
 
-	_, icon, _ := ebitenutil.NewImageFromFile("./assets/icon64.png", ebiten.FilterDefault)
+	_, icon, _ := ebitenutil.NewImageFromFile("./assets/icon128.png", ebiten.FilterDefault)
 	ebiten.SetWindowIcon([]image.Image{icon})
 
 	game, err := game.New()

@@ -1,12 +1,18 @@
 # Jam
-![Jam logo](./assets/icon64.png)   
+![Jam logo](./assets/icon128.png)   
 A basic ebiten boilerplate for future game jam use.
 
 ## Stack
 * Aseprite for sprites
-* Use JSON for tilemaps
 * Audacity for SFX recording
+* Use JSON for tilemaps
+* `/audio/music.go` for mp3 infinite bg music
+* `/audio/sound.go` for wav sfx
+
+## Usage
+* `$ make run`
+* `$ make build`
+* `$ make todo`
 
 ## TODO
-* Basic music manager?
 * Particle example
