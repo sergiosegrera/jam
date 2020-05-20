@@ -1,4 +1,5 @@
 # Jam
+![Jam logo](./assets/icon64.png)   
 A basic ebiten boilerplate for future game jam use.
 
 ## Stack
