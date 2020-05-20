@@ -25,8 +25,8 @@ type GameObject interface {
 
 type Game struct {
 	player          GameObject
-	keySound        *audio.Sound
-	backgroundMusic *audio.Music
+	keySound        *ebitenaudio.Player
+	backgroundMusic *ebitenaudio.Player
 }
 
 func New() (*Game, error) {
@@ -65,6 +65,7 @@ func (g *Game) Update(image *ebiten.Image) error {
 	}
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyE) && !g.keySound.IsPlaying() {
+		g.keySound.Rewind()
 		g.keySound.Play()
 	}
 

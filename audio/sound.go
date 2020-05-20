@@ -6,12 +6,7 @@ import (
 	"os"
 )
 
-type Sound struct {
-	audioContext *audio.Context
-	audioPlayer  *audio.Player
-}
-
-func NewSound(ctx *audio.Context, f string) (*Sound, error) {
+func NewSound(ctx *audio.Context, f string) (*audio.Player, error) {
 	file, err := os.Open(f)
 	if err != nil {
 		return nil, err
@@ -27,17 +22,5 @@ func NewSound(ctx *audio.Context, f string) (*Sound, error) {
 		return nil, err
 	}
 
-	return &Sound{
-		audioContext: ctx,
-		audioPlayer:  audioPlayer,
-	}, err
-}
-
-func (s *Sound) Play() {
-	s.audioPlayer.Rewind()
-	s.audioPlayer.Play()
-}
-
-func (s *Sound) IsPlaying() bool {
-	return s.audioPlayer.IsPlaying()
+	return audioPlayer, err
 }
