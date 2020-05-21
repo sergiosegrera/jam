@@ -1,2 +1,4 @@
-game.o
+*.o
+*.exe
+*.zip
 go.sum

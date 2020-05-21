@@ -10,7 +10,7 @@ import (
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/inpututil"
 	"github.com/sergiosegrera/jam/audio"
-	"github.com/sergiosegrera/jam/player"
+	"github.com/sergiosegrera/jam/entities"
 )
 
 var (
@@ -25,12 +25,18 @@ type GameObject interface {
 
 type Game struct {
 	player          GameObject
+	slime           GameObject
 	keySound        *ebitenaudio.Player
 	backgroundMusic *ebitenaudio.Player
 }
 
 func New() (*Game, error) {
-	p, err := player.New()
+	player, err := entities.NewPlayer()
+	if err != nil {
+		return nil, err
+	}
+
+	slime, err := entities.NewSlime(32, 32)
 	if err != nil {
 		return nil, err
 	}
@@ -52,7 +58,8 @@ func New() (*Game, error) {
 	backgroundMusic.Play()
 
 	return &Game{
-		player:          p,
+		player:          player,
+		slime:           slime,
 		keySound:        keySound,
 		backgroundMusic: backgroundMusic,
 	}, err
@@ -70,12 +77,14 @@ func (g *Game) Update(image *ebiten.Image) error {
 	}
 
 	g.player.Update()
+	g.slime.Update()
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(BLACK)
 	g.player.Draw(screen)
+	g.slime.Draw(screen)
 	// TODO: TPS counter, remove in production
 	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f", ebiten.CurrentTPS()))
 }

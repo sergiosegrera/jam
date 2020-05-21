@@ -1,4 +1,4 @@
-package player
+package entities
 
 import (
 	"github.com/hajimehoshi/ebiten"
@@ -13,7 +13,7 @@ type Player struct {
 	moveTimer int
 }
 
-func New() (*Player, error) {
+func NewPlayer() (*Player, error) {
 	img, _, err := ebitenutil.NewImageFromFile("./assets/player.png", ebiten.FilterDefault)
 	if err != nil {
 		return nil, err
