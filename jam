@@ -16,10 +16,11 @@ case "$1" in
         ;;
     init)
         read -p "Enter full GOPATH module name (example: github.com/sergiosegrera/jam): " $NAME
+        echo "Installing gomove"
+        go get -u github.com/ksubedi/gomove 
+        gomove github.com/sergiosegrera/jam $NAME
         rm -f ./go.mod
         go mod init $NAME
-        go get -u github.com/ksubedi/gomove
-        gomove github.com/sergiosegrera/jam $NAME
         ;;
     clean)
         rm -f *.{exe,o,zip}
