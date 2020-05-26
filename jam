@@ -1,0 +1,30 @@
+#! /bin/bash
+
+case "$1" in
+    run)
+        go build -o game.o ./main.go && ./game.o
+        ;;
+    build)
+        go build -o game.o ./main.go
+        ;;
+    windows)
+        GOOS=windows GOARCH=386 go build -o game.exe main.go
+        zip windows.zip assets/* game.exe
+        ;;
+    todo)
+        grep TODO -RIn --exclude={README.md,jam.sh} *
+        ;;
+    init)
+        read -p "Enter full GOPATH module name (example: github.com/sergiosegrera/jam): " $NAME
+        rm -f ./go.mod
+        go mod init $NAME
+        go get -u github.com/ksubedi/gomove
+        gomove github.com/sergiosegrera/jam $NAME
+        ;;
+    clean)
+        rm -f *.{exe,o,zip}
+        ;;
+    *)
+        echo "Usage $0 {run|build|windows|clean|todo|init}"
+        exit 1
+esac

@@ -11,12 +11,20 @@ Inspired by pico-8.
 * `/audio/sound.go` for wav sfx
 * `/utils/spritesheet.go` for spritesheet "slicing"
 
+## Installation
+```
+$ git clone https://github.com/sergiosegrera/jam {Game Name}
+$ cd {Game Name}
+$ ./jam init
+```
+
 ## Usage
-* `$ make run`
-* `$ make build`
-* `$ make windows`
-* `$ make todo`
-* `$ make clean`
+* `$ ./jam init` -- Creates new go.mod and changes imports using gomove  
+* `$ ./jam run` -- Builds and runs binary  
+* `$ ./jam build` -- Builds binary  
+* `$ ./jam windows` -- Creates windows release  
+* `$ ./jam todo` -- Shows all "TODO:" comments  
+* `$ ./jam clean` -- Cleans .exe, .o, .zip files  
 
 ## TODO
 * Particle example
