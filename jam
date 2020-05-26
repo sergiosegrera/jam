@@ -15,7 +15,7 @@ case "$1" in
         grep TODO -RIn --exclude={README.md,jam.sh} *
         ;;
     init)
-        read -p "Enter full GOPATH module name (example: github.com/sergiosegrera/jam): " $NAME
+        read -p "Enter full GOPATH module name (example: github.com/sergiosegrera/jam): " NAME
         echo "Installing gomove"
         go get -u github.com/ksubedi/gomove 
         gomove github.com/sergiosegrera/jam $NAME
