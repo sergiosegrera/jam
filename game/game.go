@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"image/color"
 
-	"github.com/hajimehoshi/ebiten"
-	ebitenaudio "github.com/hajimehoshi/ebiten/audio"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
-	"github.com/hajimehoshi/ebiten/inpututil"
+	"github.com/hajimehoshi/ebiten/v2"
+	ebitenaudio "github.com/hajimehoshi/ebiten/v2/audio"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/sergiosegrera/jam/audio"
 	"github.com/sergiosegrera/jam/entities"
 )
@@ -41,10 +41,7 @@ func New() (*Game, error) {
 		return nil, err
 	}
 
-	audioContext, err := ebitenaudio.NewContext(44100)
-	if err != nil {
-		return nil, err
-	}
+	audioContext := ebitenaudio.NewContext(44100)
 
 	keySound, err := audio.NewSound(audioContext, "./assets/sounds/keypress.wav")
 	if err != nil {
@@ -65,7 +62,7 @@ func New() (*Game, error) {
 	}, err
 }
 
-func (g *Game) Update(image *ebiten.Image) error {
+func (g *Game) Update() error {
 	// TODO: Escape for quick debugging, remove in production
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
 		return errors.New("Escape called, game exited")

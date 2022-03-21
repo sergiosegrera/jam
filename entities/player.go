@@ -1,9 +1,9 @@
 package entities
 
 import (
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
-	"github.com/hajimehoshi/ebiten/inpututil"
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type Player struct {
@@ -14,7 +14,7 @@ type Player struct {
 }
 
 func NewPlayer() (*Player, error) {
-	img, _, err := ebitenutil.NewImageFromFile("./assets/player.png", ebiten.FilterDefault)
+	img, _, err := ebitenutil.NewImageFromFile("./assets/player.png")
 	if err != nil {
 		return nil, err
 	}

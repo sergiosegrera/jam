@@ -1,13 +1,14 @@
 package utils
 
 import (
-	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"image"
+
+	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 func FileToImageSlice(f string, w, h int) ([]*ebiten.Image, error) {
-	sheet, _, err := ebitenutil.NewImageFromFile(f, ebiten.FilterDefault)
+	sheet, _, err := ebitenutil.NewImageFromFile(f)
 	if err != nil {
 		return nil, err
 	}
