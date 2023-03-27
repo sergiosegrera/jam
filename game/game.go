@@ -24,8 +24,7 @@ type GameObject interface {
 }
 
 type Game struct {
-	player          GameObject
-	slime           GameObject
+	entities        []GameObject
 	keySound        *ebitenaudio.Player
 	backgroundMusic *ebitenaudio.Player
 }
@@ -55,8 +54,10 @@ func New() (*Game, error) {
 	backgroundMusic.Play()
 
 	return &Game{
-		player:          player,
-		slime:           slime,
+		entities: []GameObject{
+			player,
+			slime,
+		},
 		keySound:        keySound,
 		backgroundMusic: backgroundMusic,
 	}, err
@@ -65,7 +66,7 @@ func New() (*Game, error) {
 func (g *Game) Update() error {
 	// TODO: Escape for quick debugging, remove in production
 	if inpututil.IsKeyJustPressed(ebiten.KeyEscape) {
-		return errors.New("Escape called, game exited")
+		return errors.New("escape called, game exited")
 	}
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyE) && !g.keySound.IsPlaying() {
@@ -73,19 +74,24 @@ func (g *Game) Update() error {
 		g.keySound.Play()
 	}
 
-	g.player.Update()
-	g.slime.Update()
+	for _, entity := range g.entities {
+		entity.Update()
+	}
+
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Fill(BLACK)
-	g.player.Draw(screen)
-	g.slime.Draw(screen)
+
+	for _, entity := range g.entities {
+		entity.Draw(screen)
+	}
+
 	// TODO: TPS counter, remove in production
-	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f", ebiten.CurrentTPS()))
+	ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f, FPS: %0.2f", ebiten.ActualTPS(), ebiten.CurrentFPS()))
 }
 
-func (g *Game) Layout(outsideWidth, outseideHeight int) (int, int) {
+func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
 	return 128, 128
 }

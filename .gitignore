@@ -2,3 +2,4 @@
 *.exe
 *.zip
 go.sum
+.DS_Store

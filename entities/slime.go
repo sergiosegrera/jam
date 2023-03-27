@@ -6,11 +6,12 @@ import (
 )
 
 type Slime struct {
-	images []*ebiten.Image
-	x      float64
-	y      float64
-	frame  int
-	time   int64
+	images       []*ebiten.Image
+	imageOptions *ebiten.DrawImageOptions
+	x            float64
+	y            float64
+	frame        int
+	time         int64
 }
 
 func NewSlime(x, y float64) (*Slime, error) {
@@ -20,25 +21,27 @@ func NewSlime(x, y float64) (*Slime, error) {
 	}
 
 	return &Slime{
-		images: images,
-		x:      x,
-		y:      y,
+		images:       images,
+		imageOptions: &ebiten.DrawImageOptions{},
+		x:            x,
+		y:            y,
 	}, err
 }
 
 func NewSlimeWithImage(images []*ebiten.Image, x, y float64) (*Slime, error) {
 	// More performant
 	return &Slime{
-		images: images,
-		x:      x,
-		y:      y,
+		images:       images,
+		imageOptions: &ebiten.DrawImageOptions{},
+		x:            x,
+		y:            y,
 	}, nil
 }
 
 func (s *Slime) Draw(screen *ebiten.Image) {
-	options := &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(s.x, s.y)
-	screen.DrawImage(s.images[s.frame], options)
+	s.imageOptions.GeoM.Reset()
+	s.imageOptions.GeoM.Translate(s.x, s.y)
+	screen.DrawImage(s.images[s.frame], s.imageOptions)
 }
 
 func (s *Slime) Update() error {
@@ -50,5 +53,6 @@ func (s *Slime) Update() error {
 		s.time = 0
 	}
 	s.time++
+
 	return nil
 }

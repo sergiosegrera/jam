@@ -7,10 +7,10 @@ import (
 )
 
 type Player struct {
-	image     *ebiten.Image
-	x         float64
-	y         float64
-	moveTimer int
+	image        *ebiten.Image
+	imageOptions *ebiten.DrawImageOptions
+	x            float64
+	y            float64
 }
 
 func NewPlayer() (*Player, error) {
@@ -20,14 +20,15 @@ func NewPlayer() (*Player, error) {
 	}
 
 	return &Player{
-		image: img,
+		image:        img,
+		imageOptions: &ebiten.DrawImageOptions{},
 	}, err
 }
 
 func (p *Player) Draw(screen *ebiten.Image) {
-	options := &ebiten.DrawImageOptions{}
-	options.GeoM.Translate(p.x, p.y)
-	screen.DrawImage(p.image, options)
+	p.imageOptions.GeoM.Reset()
+	p.imageOptions.GeoM.Translate(p.x, p.y)
+	screen.DrawImage(p.image, p.imageOptions)
 }
 
 func (p *Player) Update() error {
